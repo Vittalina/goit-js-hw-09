@@ -11,8 +11,11 @@ function onFormSubmit(event) {
   } = event.currentTarget;
   console.log(`${delay.value}, ${step.value}, ${amount.value}`)
 
-  let delayCounter = 0;
-  for (let i = 1; i <= amount.value; i += 1) {
+  let delayCounter = parseInt(delay.value);
+  const amountUser = parseInt(amount.value);
+  const stepUser = parseInt(step.value);
+
+  for (let i = 1; i <= amountUser; i += 1) {
     createPromise(i, delayCounter)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
@@ -20,7 +23,8 @@ function onFormSubmit(event) {
       .catch(({ position, delay }) => {
         Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
-    delayCounter = delay + step;
+    
+    delayCounter += stepUser;
   }
 };
 
